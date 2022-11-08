@@ -1,3 +1,4 @@
+from neuralNetwork import accuracy
 from neuralNetwork import NeuralNetwork
 import numpy as np
 import csv
@@ -6,7 +7,21 @@ import copy
 import tensorflow as tf
 from tensorflow import keras
 
+def is_integer(n):
+    try:
+        float(n)
+    except ValueError:
+        return False
+    else:
+        return float(n).is_integer()
+
+def delete_rand_items(items, n, testData):
+    to_delete = set(random.sample(range(len(items)),n))
+    testData = list(to_delete)
+    return [x for i,x in enumerate(items) if not i in to_delete]
+
 normalizedOneData = []
+totalData = []
 trainData = []
 testData = []
 normalizedOneTargets = []
@@ -15,11 +30,11 @@ testTargets = []
 NN1 = NeuralNetwork(7, 5, 1)
 NN2 = NeuralNetwork(7, 5, 1)
 
-with open('JordanDataNormalizedOne.csv', newline='') as f:
+with open('Data/JordanDataNormalizedOne.csv', newline='') as f:
     reader = csv.reader(f)
     normalizedOneData = list(reader)
 
-normalizedOneData.pop(0)
+normalizedOneData.pop(0) # remove the labels from the data
 
 for items in normalizedOneData:
     for n, i in enumerate(items):
@@ -32,27 +47,17 @@ for items in normalizedOneData:
         if is_integer(i):
             items[n] = int(i)
         elif not is_integer(i):
-            #print(items[n])
             items[n] = float(i)
 for items in normalizedOneData:
     for n, i in enumerate(items):
         if n==0 or n==5 or n==6 or n==7:
             items[n] = items[n]/100;
-trainData = copy.deepcopy(random.sample(normalizedOneData, len(normalizedOneData))) # so it doesn't point to the same reference
+totalData = copy.deepcopy(random.sample(normalizedOneData, len(normalizedOneData))) # so it doesn't point to the same reference
 for items in normalizedOneData:
-    normalizedOneTargets.append(items.pop(3))
-
-print("Normalized One Data:")
-print(normalizedOneData)
-print("Normalized One Targets: ")
-print(normalizedOneTargets)
-
-for x in range(0, 10):
-    for i in range(len(normalizedOneData)):
-        NN1.train(normalizedOneData[i], normalizedOneTargets[i])
+    normalizedOneTargets.append(items.pop(3)) # pop the win data point off(1- win, 0- loss)
 
 '''
-# Age, Team, Home, Win, Game Started, RB(Off+Def), Assists, Points
+# Age, Team, Home, Game Started, RB(Off+Def), Assists, Points
 sampleDataPoint11 = [0.216899384, 1, 1, 1, 0.10, 0.10, 0.30]# won the game
 sampleDataPoint12 = [0.2484599589, 1, 0, 1, 0.05, 0.02, 0.16]# lost the game
 sampleDataPoint13 = [0.2100, 1, 0, 1, 0.02, 0.02, 0.10]
@@ -63,24 +68,34 @@ print(guess11)
 print(guess12)
 print(guess13)'''
 
+#print(str(len(trainData)))
+# testData = trainData[858:len(trainData)]
+# trainData = trainData[:858]
 
-
-testData = trainData[859:len(trainData)]
-trainData = trainData[:858]
+trainData = delete_rand_items(totalData, 200, testData)
+print("Test Data")
+print(len(testData))
+print(testData)
+print("Train Data")
+print(len(trainData))
+print(trainData)
 
 for items in trainData:
     trainTargets.append(items.pop(3))
 for items in testData:
     testTargets.append(items.pop(3))
 
-
-
+#1000 epochs, shuffle
 for x in range(0, 10):
+    temp = list(zip(trainData, trainTargets))
+    random.shuffle(temp)
+    trainData, trainTargets = zip(*temp)
     for i in range(len(trainData)):
         NN2.train(trainData[i], trainTargets[i])
 
 print("Accuracy: "+accuracy(NN2, testData, testTargets))
 
+#tried using 25 initial data points, but accuracy was poor
 '''
 with open('JordanDataEdited.csv', newline='') as f:
     reader = csv.reader(f)

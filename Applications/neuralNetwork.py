@@ -5,19 +5,8 @@ import copy
 import tensorflow as tf
 from tensorflow import keras
 
-
-def is_integer(n):
-    try:
-        float(n)
-    except ValueError:
-        return False
-    else:
-        return float(n).is_integer()
-
-
 def sigmoid(x): # every output is between 0 and 1
     return 1/(1+np.exp(-x))
-
 
 def derivativeSigmoid(y): # for help w/gradient descent
     return y*(1-y)
