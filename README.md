@@ -1,4 +1,4 @@
-# The-Jordan-Effect
+# The Jordan Effect
 
 ## Description
 For my independent study class in Artifical Intelligence, I built a 2-layered neural network from scratch in Python. My NeuralNetwork class featured two major methods: one that outputted a prediction based on input weights and biases(feed forward) and another that adjusted weights via stochastic gradient descent based on how accurate/inaccurate the network's prediction was(back propagation).
@@ -15,8 +15,18 @@ The second application was one that originates from a personal passion of mine: 
 
 ## Conclusion
 
+The motivating question of this project was determining if Michael Jordan actually was the GOAT(Greatest of All Time). In other words, could I demonstrate a high enough statistical correlation between his individual performance and the team's performance?
+
+The 77% accuracy rate was higher than expected. With a relatively small dataset and not a proven correlation between individual and team performance, the weights calculated by the neural network demonstrated a high correlation between points scored, age and win/loss. Interestingly, the least relevant individual factors for predicting wins/loss were assists and rebounds. In a basketball context, this makes sense- for the Bulls, the primary rebounder was Dennis Rodman and the primary passer was Scottie Pippen. Safe to say MJ has a great argument for the greatest of all time.
+
 ## Getting Started
 
-Brief description of the Jordan Project: I built a multilayered neural network that took in relevant statistical information about Michael Jordan’s performance(age, home vs. away, points, rebounds, assists, and age) in order to predict whether or not the Bulls won the game. The training data was amassed from online datasets, which I parsed and normalized. 
+The 2-Layered Neural Network can be applied in a variety of contexts. In order to use it, use the following declaration:
 
-In my writeup of the project, I interestingly concluded that the least relevant factors were assists and rebounds, which seemed odd at first for a player that nearly averaged a triple double for his career. It was only upon further analysis that I realized that the Bulls’s most successful seasons came when Pippen had a majority of the assists and Rodman had a majority of the rebounds.
+```Sample_Neural_Network = NeuralNetwork(inputNodes, hiddenNodes, outputNodes)```.
+
+Train it as follows:
+
+```for i in range(len(trainData)):
+     Sample_Neural_Network.train(trainData[i], trainTargets[i])
+```
