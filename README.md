@@ -23,7 +23,9 @@ The 77% accuracy rate was higher than expected. With a relatively small dataset 
 
 The 2-Layered Neural Network can be applied in a variety of contexts. In order to use it, use the following declaration:
 
-```Sample_Neural_Network = NeuralNetwork(inputNodes, hiddenNodes, outputNodes)```.
+```
+Sample_Neural_Network = NeuralNetwork(inputNodes, hiddenNodes, outputNodes)
+```
 
 Train it as follows:
 
