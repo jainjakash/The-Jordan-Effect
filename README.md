@@ -31,6 +31,7 @@ Sample_Neural_Network = NeuralNetwork(inputNodes, hiddenNodes, outputNodes)
 
 Train it as follows:
 
-```for i in range(len(trainData)):
+```
+for i in range(len(trainData)):
      Sample_Neural_Network.train(trainData[i], trainTargets[i])
 ```
