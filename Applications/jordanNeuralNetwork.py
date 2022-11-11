@@ -63,7 +63,7 @@ print(guess11)
 print(guess12)
 print(guess13)'''
 
-counter = 215 # roughly twenty percent of total data
+counter = 200 # roughly twenty percent of total data
 
 while (counter > 0):
     a = random.randint(0, len(totalData))
