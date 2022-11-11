@@ -15,11 +15,6 @@ def is_integer(n):
     else:
         return float(n).is_integer()
 
-def delete_rand_items(items, n, testData):
-    to_delete = set(random.sample(range(len(items)),n))
-    testData = list(to_delete)
-    return [x for i,x in enumerate(items) if not i in to_delete]
-
 normalizedOneData = []
 totalData = []
 trainData = []
@@ -68,17 +63,14 @@ print(guess11)
 print(guess12)
 print(guess13)'''
 
-#print(str(len(trainData)))
-# testData = trainData[858:len(trainData)]
-# trainData = trainData[:858]
+counter = 215 # roughly twenty percent of total data
 
-trainData = delete_rand_items(totalData, 200, testData)
-print("Test Data")
-print(len(testData))
-print(testData)
-print("Train Data")
-print(len(trainData))
-print(trainData)
+while (counter > 0):
+    a = random.randint(0, len(totalData))
+    testData.append(totalData.pop(a))
+    counter = counter - 1
+
+trainData = totalData
 
 for items in trainData:
     trainTargets.append(items.pop(3))
@@ -86,7 +78,7 @@ for items in testData:
     testTargets.append(items.pop(3))
 
 #1000 epochs, shuffle
-for x in range(0, 10):
+for x in range(0, 1000):
     temp = list(zip(trainData, trainTargets))
     random.shuffle(temp)
     trainData, trainTargets = zip(*temp)
