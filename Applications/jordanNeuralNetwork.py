@@ -15,6 +15,9 @@ def is_integer(n):
     else:
         return float(n).is_integer()
 
+#does this work
+#let's find out
+
 normalizedOneData = []
 totalData = []
 trainData = []
